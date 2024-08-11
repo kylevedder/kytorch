@@ -1,0 +1,6 @@
+# Ignore all pycaches
+**/__pycache__/
+# Ignore all pyc files
+*.pyc
+# Ignore mypy cache
+.mypy_cache/
