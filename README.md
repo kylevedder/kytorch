@@ -33,4 +33,10 @@ Because this `GradFn` contains a reference to the input `Tensor` (or `Tensor`s),
 
 Unlike PyTorch, the completed backwards pass directly gives us a list of `TrainableWeight`s and their gradients(`list[tuple[Gradient, TrainableWeight]]`). Optimization can then be done by updating the weights using their gradients; for simple Gradient Descent, this is just subtracting the gradient scaled by a learning rate from the weight.
 
+## Demos
 
+To run the demos, you have to add the library to your Python path. As an example:
+
+```bash
+PYTHONPATH=`pwd`:$PYTHONPATH python demos/two_layer_binary_classification.py 
+```
