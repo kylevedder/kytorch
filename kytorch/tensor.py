@@ -69,12 +69,14 @@ class CallableGradFn(LeafGradFn, ABC):
 
     @abstractmethod
     def compute_gradient(
-        self, child_grad: Gradient
+        self, loss_wrt_child: Gradient
     ) -> tuple[Gradient, list[tuple[Gradient, TrainableWeight]]]:
         raise NotImplementedError
 
-    def backwards(self, child_grad: Gradient) -> list[tuple[Gradient, TrainableWeight]]:
-        our_input_grad, our_weight_grads = self.compute_gradient(child_grad)
+    def backwards(
+        self, loss_wrt_child: Gradient
+    ) -> list[tuple[Gradient, TrainableWeight]]:
+        our_input_grad, our_weight_grads = self.compute_gradient(loss_wrt_child)
 
         # Type checking overriden code results to ensure correctness.
         assert isinstance(
