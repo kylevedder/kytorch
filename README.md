@@ -18,7 +18,7 @@ During the forward pass, every edit operation creates a new `Tensor` with a `Gra
 
 During the backwards pass, the `backward` method is called on the final `Tensor` in the computation graph (i.e. the loss tensor), initialized with a `0` gradient. The loss gradient will ignore this input gradient and compute a gradient with respect to the loss, kicking off recursive calls to `backward` on the `GradFn` of the `Tensor`s that use the call stack to perform depth first search of the computation graph.
 
-Each call passes in the output's gradient with respect to the loss (i.e. the last operation) so far. The `GradFn` then computes the gradient for the input tensor and the trainable weights with respect to the output tensor, and then combines these to get gradients with respect to the loss (calculus' chain rule). This is reflected in the type signature of `CallableGradFn`'s `compute_gradient()` method, which assumes one input tensor (the first element of the return tuple):
+Each call passes in the output's gradient with respect to the loss (i.e. the last operation) so far. The `GradFn` then computes the gradient for the input tensor(s) and the trainable weights with respect to the output tensor, and then combines these to get gradients with respect to the loss (calculus' chain rule). This is reflected in the type signature of `CallableGradFn`'s `compute_gradient()` method, which assumes one input tensor (the first element of the return tuple):
 
 ```python
 def compute_gradient(
@@ -31,7 +31,7 @@ Because this `GradFn` contains a reference to the input `Tensor` (or `Tensor`s),
 
 ## Optimization
 
-Unlike PyTorch, the completed backwards pass directly gives us a list of `TrainableWeight`s and their gradients(`list[tuple[Gradient, TrainableWeight]]`). Optimization can then be done by updating the weights using their gradients; for simple Gradient Descent, this is just subtracting the gradient scaled by a learning rate from the weight.
+Unlike PyTorch, the completed backwards pass directly returns a list of `TrainableWeight`s and their gradients(`list[tuple[Gradient, TrainableWeight]]`). Optimization can then be done by updating the weights using their gradients; for simple Gradient Descent, this is just subtracting the gradient scaled by a learning rate from the weight.
 
 ## Demos
 
@@ -44,6 +44,9 @@ PYTHONPATH=`pwd`:$PYTHONPATH python demos/two_layer_binary_classification.py
 should produce
 
 ```
+Epoch 0: Loss: 0.7493288099765778
+Epoch 100: Loss: 0.1466349795460701
+Epoch 200: Loss: 0.18007928729057313
 ...
 Epoch 1700: Loss: 0.0010693292832002043
 Epoch 1800: Loss: 0.0010082000051625073
