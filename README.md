@@ -40,3 +40,12 @@ To run the demos, you have to add the library to your Python path. As an example
 ```bash
 PYTHONPATH=`pwd`:$PYTHONPATH python demos/two_layer_binary_classification.py 
 ```
+
+should produce
+
+```
+...
+Epoch 1700: Loss: 0.0010693292832002043
+Epoch 1800: Loss: 0.0010082000051625073
+Epoch 1900: Loss: 0.0009537238045595586
+```

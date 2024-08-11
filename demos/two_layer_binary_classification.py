@@ -19,7 +19,7 @@ loss_fn = nn.BCELoss()
 opt = optim.GradientDescent(lr=0.1)
 
 
-for epoch_idx in range(100000):
+for epoch_idx in range(2000):
     epoch_loss = 0
     for sample_input, sample_output in zip(sample_inputs, sample_outputs):
         sample_input = np.array(sample_input, dtype=np.float32)
